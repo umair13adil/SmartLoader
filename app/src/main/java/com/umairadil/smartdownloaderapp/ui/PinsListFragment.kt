@@ -1,19 +1,19 @@
 package com.umairadil.smartdownloaderapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.blackbox.apps.smartdownloader.SmartLoader
 import com.umairadil.smartdownloaderapp.R
 import com.umairadil.smartdownloaderapp.adapters.PinsAdapter
 import com.umairadil.smartdownloaderapp.ui.base.BaseFragment
 import com.umairadil.smartdownloaderapp.utils.isConnected
 import com.umairadil.smartdownloaderapp.utils.recyclerViewUtils.EndlessScrollListener
+import com.umairadil.smartdownloaderapp.utils.recyclerViewUtils.FlexiSmoothScroller
+import com.umairadil.smartdownloaderapp.utils.recyclerViewUtils.SpacesItemDecoration
 import com.umairadil.smartdownloaderapp.viewmodels.PinsViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -25,6 +25,7 @@ class PinsListFragment : BaseFragment() {
     private val TAG = "PinsListFragment"
     private lateinit var viewModel: PinsViewModel
     private lateinit var adapter: PinsAdapter
+    private lateinit var layoutManager: RecyclerView.LayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_pins_list, container, false)
@@ -59,12 +60,19 @@ class PinsListFragment : BaseFragment() {
             //Clear adapter list
             adapter.submitList(arrayListOf())
 
-            //Clear Cached images
-            SmartLoader().resetCache()
-
             //Re-Request images from server
             fetchBoard()
         }
+
+        fab_go_to_top.setOnClickListener {
+            smoothScroll(recycler_view, 0)
+        }
+    }
+
+    private fun smoothScroll(recyclerView: RecyclerView, targetPos: Int) {
+        val smoothScroller = FlexiSmoothScroller(recyclerView.context).setMillisecondsPerInchSearchingTarget(100f)
+        smoothScroller.targetPosition = targetPos
+        recyclerView.layoutManager?.startSmoothScroll(smoothScroller)
     }
 
     /*
@@ -81,14 +89,16 @@ class PinsListFragment : BaseFragment() {
         adapter = PinsAdapter()
         adapter.setHasStableIds(true)
 
-        val layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
+
+        val decoration = SpacesItemDecoration(16)
+        recycler_view.addItemDecoration(decoration)
 
         val loadMoreListener = object : EndlessScrollListener(layoutManager) {
 
             override fun onLoadMore(page: Int, totalItemsCount: Int) {
-                Log.i(TAG, "Page: $page, Total Items: $totalItemsCount")
 
                 //Request images from server
                 fetchBoard()

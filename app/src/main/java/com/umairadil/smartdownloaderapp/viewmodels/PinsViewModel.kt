@@ -20,7 +20,7 @@ class PinsViewModel : ViewModel() {
         response?.let {
 
             it.forEach { res ->
-                val pin = Pins()
+                val pin = Pins(res.id)
 
                 //Set Image URL
                 res.urls?.regular?.let {

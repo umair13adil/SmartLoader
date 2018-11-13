@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/margin_3"
-    android:layout_marginLeft="@dimen/margin_3"
-    android:layout_marginBottom="@dimen/margin_3"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/ripple"
-    app:cardCornerRadius="@dimen/margin_2"
+    app:cardCornerRadius="@dimen/margin_0"
     app:cardElevation="@dimen/margin_4"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +18,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_pin"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_180"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_empty" />
 

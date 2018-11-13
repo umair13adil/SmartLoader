@@ -89,5 +89,4 @@ abstract class EndlessScrollListener constructor(private val mLayoutManager: Rec
 
     // Defines the process for actually loading more data based on page
     abstract fun onLoadMore(page: Int, totalItemsCount: Int)
-
 }
