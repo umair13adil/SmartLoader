@@ -30,6 +30,29 @@ object MemoryCache {
     }
 
     /**
+     * This will setup memory cache according to provided size.
+     *
+     * @param size size of Cache
+     */
+    fun setUpMemoryCache(size: Int): LruCache<String, Bitmap> {
+
+        val cacheSizeMax = if (size > 0) {
+            size
+        } else {
+            1
+        }
+
+        mMemoryCache = object : LruCache<String, Bitmap>(cacheSizeMax) {
+
+            override fun sizeOf(key: String, bitmap: Bitmap): Int {
+                return bitmap.byteCount
+            }
+        }
+
+        return mMemoryCache
+    }
+
+    /**
      * This will add bitmap to In-Memory cache.
      *
      * @param bitmap image resource

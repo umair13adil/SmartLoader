@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.umairadil.smartdownloaderapp.R
 import com.umairadil.smartdownloaderapp.adapters.PinsAdapter
@@ -25,7 +24,7 @@ class PinsListFragment : BaseFragment() {
     private val TAG = "PinsListFragment"
     private lateinit var viewModel: PinsViewModel
     private lateinit var adapter: PinsAdapter
-    private lateinit var layoutManager: RecyclerView.LayoutManager
+    private lateinit var layoutManager: StaggeredGridLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_pins_list, container, false)
@@ -89,9 +88,10 @@ class PinsListFragment : BaseFragment() {
      */
     private fun setUpListAdapter() {
         adapter = PinsAdapter()
-        adapter.setHasStableIds(true)
 
         layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
 
