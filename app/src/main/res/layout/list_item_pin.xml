@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_3"
+    android:layout_marginLeft="@dimen/margin_3"
+    android:layout_marginBottom="@dimen/margin_3"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple"
+    app:cardCornerRadius="@dimen/margin_2"
+    app:cardElevation="@dimen/margin_4"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_pin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_180"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_empty" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/margin_55"
+                android:layout_height="@dimen/margin_55"
+                android:src="@drawable/ic_empty" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_user_name"
+                style="@style/TextTitleStyle.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="@dimen/margin_5"
+                android:paddingLeft="@dimen/margin_5"
+                android:text="Name" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_likes"
+            style="@style/TextTitleStyle.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

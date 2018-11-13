@@ -1,0 +1,54 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="scrollbarStyleVertical">
+        <item name="android:scrollbarStyle">outsideInset</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:fadeScrollbars">true</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scroll_bar_thumb</item>
+        <item name="android:scrollbarTrackVertical">@drawable/scroll_bar_track</item>
+        <item name="android:scrollbarSize">@dimen/margin_2</item>
+    </style>
+
+    <style name="TextTitleStyle">
+        <item name="android:textColor">@color/colorTextLight</item>
+        <item name="android:textSize">@dimen/txt_size_18</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextTitleStyle.Large">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/txt_size_32</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextTitleStyle.Medium">
+        <item name="android:textColor">@color/colorTextEmpty</item>
+        <item name="android:textSize">@dimen/txt_size_18</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextTitleStyle.Small">
+        <item name="android:textColor">@color/colorTextDark</item>
+        <item name="android:textSize">@dimen/txt_size_14</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextTitleStyle.Smaller">
+        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textSize">@dimen/txt_size_10</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+
+</resources>
