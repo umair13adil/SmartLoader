@@ -5,6 +5,6 @@
     <string name="label_pins_fragment">Pins</string>
 
     <!--General-->
-    <string name="txt_check_internet">You are not connected to internet!</string>
-    <string name="txt_loading">Loading more..</string>
+    <string name="txt_check_internet">Not connected to internet!</string>
+    <string name="txt_loading">Loading..</string>
 </resources>

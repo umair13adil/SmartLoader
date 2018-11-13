@@ -6,24 +6,23 @@ import android.view.View
 import android.view.animation.*
 import androidx.fragment.app.Fragment
 import com.umairadil.smartdownloaderapp.R
-import kotlinx.android.synthetic.main.layout_progress.*
 
 abstract class BaseFragment : Fragment() {
 
-    fun showLoading() {
-        card_progress?.visibility = View.VISIBLE
+    fun showLoading(view: View?) {
+        view?.visibility = View.VISIBLE
     }
 
-    fun hideLoading() {
+    fun hideLoading(view: View?) {
 
         //Hide Progress Layout
-        card_progress?.animate()
-                ?.translationY(card_progress.height.toFloat())
+        view?.animate()
+                ?.translationY(view.height.toFloat())
                 ?.alpha(0.0f)
                 ?.setDuration(resources.getInteger(R.integer.anim_duration_long).toLong())
                 ?.setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator?) {
-                        card_progress.visibility = View.GONE
+                        view.visibility = View.GONE
                     }
                 })
     }

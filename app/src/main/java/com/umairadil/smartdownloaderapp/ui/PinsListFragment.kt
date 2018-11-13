@@ -12,8 +12,8 @@ import com.umairadil.smartdownloaderapp.adapters.PinsAdapter
 import com.umairadil.smartdownloaderapp.ui.base.BaseFragment
 import com.umairadil.smartdownloaderapp.utils.isConnected
 import com.umairadil.smartdownloaderapp.utils.recyclerViewUtils.EndlessScrollListener
-import com.umairadil.smartdownloaderapp.utils.recyclerViewUtils.FlexiSmoothScroller
 import com.umairadil.smartdownloaderapp.utils.recyclerViewUtils.SpacesItemDecoration
+import com.umairadil.smartdownloaderapp.utils.recyclerViewUtils.smoothScroll
 import com.umairadil.smartdownloaderapp.viewmodels.PinsViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -43,6 +43,7 @@ class PinsListFragment : BaseFragment() {
 
         //This will setup list adapter
         setUpListAdapter()
+        setUpSwipeRefreshListener()
 
         //Check if device is connected to internet
         if (!isConnected(activity!!)) {
@@ -53,8 +54,19 @@ class PinsListFragment : BaseFragment() {
         //Request images from server
         fetchBoard()
 
+        //If clicked, scroll to top
+        fab_go_to_top.setOnClickListener {
+            smoothScroll(recycler_view, 0)
+        }
+    }
+
+    /**
+     * This will setup SwipeRefresh layout.
+     */
+    private fun setUpSwipeRefreshListener() {
         swipeRefreshLayout.setOnRefreshListener {
 
+            //Hide FAB
             hideViewWithAnimation(fab_go_to_top)
 
             //Clear adapter list
@@ -63,16 +75,6 @@ class PinsListFragment : BaseFragment() {
             //Re-Request images from server
             fetchBoard()
         }
-
-        fab_go_to_top.setOnClickListener {
-            smoothScroll(recycler_view, 0)
-        }
-    }
-
-    private fun smoothScroll(recyclerView: RecyclerView, targetPos: Int) {
-        val smoothScroller = FlexiSmoothScroller(recyclerView.context).setMillisecondsPerInchSearchingTarget(100f)
-        smoothScroller.targetPosition = targetPos
-        recyclerView.layoutManager?.startSmoothScroll(smoothScroller)
     }
 
     /*
@@ -96,6 +98,14 @@ class PinsListFragment : BaseFragment() {
         val decoration = SpacesItemDecoration(16)
         recycler_view.addItemDecoration(decoration)
 
+        //Add on LoadMore listener
+        setupOnLoadMoreListener()
+    }
+
+    /**
+     * This will add 'EndlessScroll' listener.
+     */
+    private fun setupOnLoadMoreListener(){
         val loadMoreListener = object : EndlessScrollListener(layoutManager) {
 
             override fun onLoadMore(page: Int, totalItemsCount: Int) {
@@ -121,7 +131,7 @@ class PinsListFragment : BaseFragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
-                    showLoading()
+                    showLoading(layout_progress)
                 }
                 .subscribeBy(
                         onNext = {
@@ -129,12 +139,12 @@ class PinsListFragment : BaseFragment() {
                             adapter.submitList(list)
 
                             swipeRefreshLayout.isRefreshing = false
-                            hideLoading()
+                            hideLoading(layout_progress)
                             showViewWithAnimation(fab_go_to_top)
                         },
                         onError = {
                             it.printStackTrace()
-                            hideLoading()
+                            hideLoading(layout_progress)
                         }
                 )
     }
