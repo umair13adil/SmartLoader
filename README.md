@@ -5,10 +5,9 @@
 Overview
 --------
 
-Smartloader automatically downloads & caches images in background. It's light weight. It cancels all download requests once activty/fragment is destroyed. It manages all needs for loading images into ImageView. It can also support large list where multiple images are requested at once.
+SmartLoader automatically downloads & caches images in background. It's light weight. It cancels all download requests once activty/fragment is destroyed. It manages all needs for loading images into ImageView. It can also support large list where multiple images are requested at once.
 
-![Alt text](pictures/feature.png?raw=true "Icon")
-![Image1](pictures/picture1.png)
+![Image1](pictures/demo.gif.gif)
 
 Features
 --------
