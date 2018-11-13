@@ -1,6 +1,7 @@
 # Smart Loader Library
 ### A simple library to load & cache remote image resources.
 
+[![](https://jitpack.io/v/umair13adil/SmartLoader.svg)](https://jitpack.io/#umair13adil/SmartLoader)
 
 Overview
 --------
@@ -44,7 +45,7 @@ allprojects {
 
 ```groovy
 dependencies {
-   implementation 'com.github.umair13adil:'
+   implementation 'com.github.umair13adil:SmartLoader:0.1'
 }
 ```
 
