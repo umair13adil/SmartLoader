@@ -3,10 +3,10 @@ package com.blackbox.apps.smartdownloader.requests
 import android.graphics.Bitmap
 import android.widget.ImageView
 import com.blackbox.apps.smartdownloader.cache.MemoryCache
-import com.blackbox.apps.smartdownloader.resource.ResourceCallback
 import com.blackbox.apps.smartdownloader.configurations.Configuration
-import com.blackbox.apps.smartdownloader.resource.image.ImageLoader
 import com.blackbox.apps.smartdownloader.resource.Resource
+import com.blackbox.apps.smartdownloader.resource.ResourceCallback
+import com.blackbox.apps.smartdownloader.resource.image.ImageLoader
 
 
 class RequestCreator(configuration: Configuration) {
@@ -50,8 +50,8 @@ class RequestCreator(configuration: Configuration) {
         //Setup InMemory cache
         MemoryCache.setUpMemoryCache(context)
 
-        if (resource.url == null)
-            throw Exception("URL can not be null!")
+        if (resource.url == null && resource.resourceId == null)
+            throw Exception("Null resource provided!")
 
         if (resource.view == null)
             throw Exception("ImageView can not be null!")
@@ -59,11 +59,18 @@ class RequestCreator(configuration: Configuration) {
         if (resource.view !is ImageView)
             throw Exception("Provided view is not of type ImageView!")
 
-        if (resource.url!!.isEmpty())
-            throw Exception("URL can not be empty!")
+        resource.url?.let {
+            if (it.isEmpty())
+                throw Exception("URL can not be empty!")
+        }
+
+        resource.resourceId?.let {
+            if (it == 0 || it == -1)
+                throw Exception("Resource can not be empty!")
+        }
 
         val callBack = object : ResourceCallback {
-            override fun onCachedLoaded(bitmap: Bitmap) {
+            override fun onLoaded(bitmap: Bitmap) {
 
                 resource.view?.let {
                     ImageLoader.renderImage(bitmap, it)
@@ -76,7 +83,7 @@ class RequestCreator(configuration: Configuration) {
         }
 
         resource.let {
-            ImageLoader.loadImage(it.url!!, it.view!!, okHttpClient, callBack)
+            ImageLoader.loadImage(it.url, it.resourceId, it.context!!, it.view!!, okHttpClient, callBack)
         }
     }
 }

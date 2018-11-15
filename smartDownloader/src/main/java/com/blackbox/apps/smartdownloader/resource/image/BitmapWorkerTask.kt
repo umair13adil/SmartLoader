@@ -1,14 +1,18 @@
 package com.blackbox.apps.smartdownloader.resource.image
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.os.AsyncTask
+import android.webkit.URLUtil
 import android.widget.ImageView
 import com.blackbox.apps.smartdownloader.cache.MemoryCache.addBitmapToMemoryCache
+import com.blackbox.apps.smartdownloader.utils.createBitmapFromFile
+import com.blackbox.apps.smartdownloader.utils.createBitmapFromResource
 import com.blackbox.apps.smartdownloader.utils.createBitmapFromResponse
 import okhttp3.Response
 import java.lang.ref.WeakReference
 
-internal class BitmapWorkerTask(private val path: String, imageView: ImageView) : AsyncTask<Response, Void, Bitmap>() {
+internal class BitmapWorkerTask(private val path: String?, private val resourceId: Int?, imageView: ImageView, private val context: Context) : AsyncTask<Response, Void, Bitmap>() {
 
     private val imageViewReference: WeakReference<ImageView>?
 
@@ -18,8 +22,26 @@ internal class BitmapWorkerTask(private val path: String, imageView: ImageView) 
     }
 
     override fun doInBackground(vararg params: Response): Bitmap? {
-        val bitmap = createBitmapFromResponse(params[0])
-        addBitmapToMemoryCache(path, bitmap)
+        var bitmap: Bitmap? = null
+
+        //Create bitmap from network response
+        path?.let {
+            val isURL = (URLUtil.isHttpUrl(path) || URLUtil.isHttpsUrl(path))
+
+            bitmap = if (isURL) {
+                createBitmapFromResponse(params[0])
+            } else {
+                createBitmapFromFile(it)
+            }
+
+            addBitmapToMemoryCache(it, bitmap)
+        }
+
+        resourceId?.let {
+            bitmap = createBitmapFromResource(it, context)
+            addBitmapToMemoryCache(it.toString(), bitmap)
+        }
+
         return bitmap
     }
 

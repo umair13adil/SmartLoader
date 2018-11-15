@@ -20,6 +20,7 @@ class SmartLoader : LifecycleObserver {
 
     private var context: Context? = null
     private var url: String? = null
+    private var resourceId: Int? = null
     private var view: ImageView? = null
     private var configuration: Configuration = SmartConfiguration().build()
 
@@ -36,6 +37,13 @@ class SmartLoader : LifecycleObserver {
      * @param url of Resource
      */
     fun load(url: String?) = apply { this.url = url }
+
+    /**
+     * Id of drawable Image Resource.
+     *
+     * @param resourceId of Drawable Image
+     */
+    fun load(resourceId: Int?) = apply { this.resourceId = resourceId }
 
     /**
      * ImageView on which image will be displayed after downloading.
@@ -65,6 +73,7 @@ class SmartLoader : LifecycleObserver {
     private fun build() = Resource(
             context,
             url,
+            resourceId,
             view,
             configuration
     )
