@@ -25,6 +25,9 @@ Images that are loaded from remote server requires internet permission, make sur
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
+
+//If loading images from storage, then add this permission
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
 
 Setup
@@ -45,7 +48,7 @@ allprojects {
 
 ```groovy
 dependencies {
-   implementation 'com.github.umair13adil:SmartLoader:0.3'
+   implementation 'com.github.umair13adil:SmartLoader:0.4'
 }
 ```
 
