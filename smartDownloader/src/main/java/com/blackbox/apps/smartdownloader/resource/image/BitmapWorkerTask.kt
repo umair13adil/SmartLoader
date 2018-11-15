@@ -54,11 +54,15 @@ internal class BitmapWorkerTask(private val path: String?, private val resourceI
 
     //onPostExecute() sets the bitmap fetched by doInBackground()
     override fun onPostExecute(bitmap: Bitmap?) {
-        if (imageViewReference != null && bitmap != null) {
-            val imageView = imageViewReference.get() as ImageView
-            imageView.setImageBitmap(bitmap)
-            callback?.onLoaded(bitmap)
-        }else{
+        if (imageViewReference != null) {
+            bitmap?.let { bitmapImage ->
+                val imageView = imageViewReference.get() as? ImageView
+                imageView?.let {
+                    it.setImageBitmap(bitmapImage)
+                    callback?.onLoaded(bitmapImage)
+                }
+            }
+        } else {
             callback?.onLoadFailed(Exception("Unable to load image!"))
         }
     }

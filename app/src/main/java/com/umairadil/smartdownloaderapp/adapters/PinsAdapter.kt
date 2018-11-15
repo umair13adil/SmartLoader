@@ -1,11 +1,13 @@
 package com.umairadil.smartdownloaderapp.adapters
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.blackbox.apps.smartdownloader.SmartLoader
+import com.blackbox.apps.smartdownloader.resource.ResourceCallback
 import com.umairadil.smartdownloaderapp.R
 import com.umairadil.smartdownloaderapp.data.Pins
 import com.umairadil.smartdownloaderapp.utils.setTypeface
@@ -38,7 +40,16 @@ class PinsAdapter : ListAdapter<Pins, PinsAdapter.ViewHolder>(PinsDiffCallback()
             itemView.txt_user_name.typeface = setTypeface(4, context)
 
             SmartLoader().withContext(itemView.context).load(pin.url).into(itemView.img_pin)
-            SmartLoader().withContext(itemView.context).load(pin.user_profile_image).into(itemView.profile_image)
+            SmartLoader().withContext(itemView.context).load(pin.user_profile_image).into(itemView.profile_image, object : ResourceCallback {
+
+                override fun onLoaded(bitmap: Bitmap) {
+
+                }
+
+                override fun onLoadFailed(e: Exception) {
+                   e.printStackTrace()
+                }
+            })
         }
     }
 }
