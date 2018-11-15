@@ -39,7 +39,7 @@ class RequestCreator(configuration: Configuration) {
      *
      * @param imageLoader
      */
-    fun createImageLoadRequest(resource: Resource) {
+    fun createImageLoadRequest(resource: Resource, resourceCallback: ResourceCallback? = null) {
 
         val context = resource.context?.applicationContext
                 ?: throw Exception("Null context provided!")
@@ -69,7 +69,22 @@ class RequestCreator(configuration: Configuration) {
                 throw Exception("Resource can not be empty!")
         }
 
-        val callBack = object : ResourceCallback {
+        if (resourceCallback == null) {
+            val callBack = setUpCallBack(resource)
+
+            resource.let {
+                ImageLoader.loadImage(it.url, it.resourceId, it.context!!, it.view!!, okHttpClient, callBack)
+            }
+
+        } else {
+            resource.let {
+                ImageLoader.loadImage(it.url, it.resourceId, it.context!!, it.view!!, okHttpClient, resourceCallback)
+            }
+        }
+    }
+
+    private fun setUpCallBack(resource: Resource): ResourceCallback {
+        return object : ResourceCallback {
             override fun onLoaded(bitmap: Bitmap) {
 
                 resource.view?.let {
@@ -80,10 +95,6 @@ class RequestCreator(configuration: Configuration) {
             override fun onLoadFailed(e: Exception) {
                 e.printStackTrace()
             }
-        }
-
-        resource.let {
-            ImageLoader.loadImage(it.url, it.resourceId, it.context!!, it.view!!, okHttpClient, callBack)
         }
     }
 }

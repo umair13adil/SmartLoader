@@ -53,7 +53,9 @@ object ImageLoader {
 
             } else {
                 //Create bitmap from resource Id, add bitmap to cache and view it on ImageView
-                BitmapWorkerTask(null, resourceId, imageView, context).execute()
+                val task = BitmapWorkerTask(null, resourceId, imageView, context)
+                task.setListener(imageCallback)
+                task.execute()
             }
         }
     }
@@ -83,13 +85,17 @@ object ImageLoader {
                     }
 
                     //Create bitmap from response, add bitmap to cache and view it on ImageView
-                    BitmapWorkerTask(path, null, imageView, context).execute(response)
+                    val task = BitmapWorkerTask(path, null, imageView, context)
+                    task.setListener(imageCallback)
+                    task.execute(response)
                 }
             })
         } else {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 //Create bitmap from response, add bitmap to cache and view it on ImageView
-                BitmapWorkerTask(path, null, imageView, context).execute()
+                val task = BitmapWorkerTask(path, null, imageView, context)
+                task.setListener(imageCallback)
+                task.execute()
             } else {
                 throw Exception("Storage read permission not granted!")
             }

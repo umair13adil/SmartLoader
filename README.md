@@ -45,7 +45,7 @@ allprojects {
 
 ```groovy
 dependencies {
-   implementation 'com.github.umair13adil:SmartLoader:0.1'
+   implementation 'com.github.umair13adil:SmartLoader:0.3'
 }
 ```
 
@@ -57,6 +57,23 @@ To load image to 'ImageView' simply add this:
 ```kotlin
     SmartLoader().withContext(context).load("ADD_URL_HERE").into(imageView)
 ```
+
+To load image to 'ImageView' with callback:
+
+```kotlin
+    SmartLoader().withContext(context).load("ADD_URL_HERE").into(image, object : ResourceCallback {
+
+            override fun onLoaded(bitmap: Bitmap) {
+
+            }
+
+            override fun onLoadFailed(e: Exception) {
+               e.printStackTrace()
+            }
+        })
+```
+
+
 
 ## Add Configuration (Optional)
 

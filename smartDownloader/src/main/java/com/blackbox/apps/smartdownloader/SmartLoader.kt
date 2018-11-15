@@ -11,6 +11,7 @@ import com.blackbox.apps.smartdownloader.configurations.SmartConfiguration
 import com.blackbox.apps.smartdownloader.requests.RequestCreator
 import com.blackbox.apps.smartdownloader.requests.RequestDispatcher
 import com.blackbox.apps.smartdownloader.resource.Resource
+import com.blackbox.apps.smartdownloader.resource.ResourceCallback
 
 /**
  * SmartLoader will load images and cache them in Memory.
@@ -53,6 +54,16 @@ class SmartLoader : LifecycleObserver {
     fun into(view: ImageView?) = apply { this.view = view }.also {
         val request = build()
         RequestCreator.getInstance(it.configuration).createImageLoadRequest(request)
+    }
+
+    /**
+     * ImageView on which image will be displayed after downloading.
+     *
+     * @param view of type ImageView
+     */
+    fun into(view: ImageView?, requestCallBack: ResourceCallback) = apply { this.view = view }.also {
+        val request = build()
+        RequestCreator.getInstance(it.configuration).createImageLoadRequest(request, resourceCallback = requestCallBack)
     }
 
     /**
