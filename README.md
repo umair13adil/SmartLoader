@@ -13,7 +13,7 @@ SmartLoader automatically downloads & caches images in background. It's light we
 Features
 --------
 
-1. Load images into ImageView
+1. Load images from **(network, drawables, files)** into ImageView
 2. Parallel download of images, cancellation of downloads
 3. Supports configurable InMemory Cache
 
